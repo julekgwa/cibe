@@ -1,0 +1,8 @@
+version: "3.8"
+services:
+  be:
+    build:
+      context: https://${TOKEN}@github.com/julekgwa/cibe.git#main
+      dockerfile: Dockerfile
+    ports:
+      - 8083:8083

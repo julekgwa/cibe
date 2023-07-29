@@ -1,22 +1,30 @@
 import fastify from 'fastify';
 import { exit } from 'process';
+import { db } from './config';
+import { registerRoutes } from './routes';
 
-const server = fastify();
+const uri = process.env.MONGODB_URI || 'mongodb://localhost:27017/movies';
 
-server.get('/', async (req, res) => {
-  res.send('Hello World')
-})
+const server = fastify({
+  logger: true
+});
+
+server.register(db, { uri });
+
+registerRoutes(server);
 
 server.listen({
   port: 8083,
   host: '0.0.0.0'
-}, (err, address) => {
+},  (err, address) => {
+
   if (err) {
+
     console.error(err);
-    exit()
+    exit();
 
   }
 
   console.log(`Started server at ${address}`);
 
-})
+});
