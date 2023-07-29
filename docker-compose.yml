@@ -1,6 +1,7 @@
 version: "3.8"
 services:
   api:
+    restart: always
     build:
       context: https://${TOKEN}@github.com/julekgwa/cibe.git#main
       dockerfile: Dockerfile
@@ -9,6 +10,7 @@ services:
     environment:
       MONGODB_URI: mongodb://db/movies
   db:
+    restart: always
     image: mongo
     volumes:
       - movies:/data/db
