@@ -1,4 +1,4 @@
-FROM node:16-alpine3.18
+FROM --platform=arm64 node:16-alpine3.18
 
 WORKDIR /app
 
