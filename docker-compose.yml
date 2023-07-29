@@ -1,8 +1,17 @@
 version: "3.8"
 services:
-  be:
+  api:
     build:
       context: https://${TOKEN}@github.com/julekgwa/cibe.git#main
       dockerfile: Dockerfile
     ports:
       - 8083:8083
+    environment:
+      MONGODB_URI: mongodb://db/movies
+  db:
+    image: mongo
+    volumes:
+      - movies:/data/db
+
+volumes:
+  movies:
