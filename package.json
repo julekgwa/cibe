@@ -10,11 +10,12 @@
     "dev": "ts-node-dev --respawn --transpile-only --exit-child --watch app app/app.ts"
   },
   "dependencies": {
+    "@fastify/swagger": "^8.10.0",
+    "@fastify/swagger-ui": "^1.9.3",
     "@hapi/boom": "^10.0.1",
     "boom": "^7.3.0",
     "fastify": "^4.21.0",
     "fastify-plugin": "^4.5.1",
-    "fluent-json-schema": "^4.1.1",
     "mongoose": "^7.4.1"
   },
   "devDependencies": {

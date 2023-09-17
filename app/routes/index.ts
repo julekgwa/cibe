@@ -1,6 +1,5 @@
 /* eslint-disable no-magic-numbers */
 import { FastifyInstance } from 'fastify';
-import { addMovieSchema } from '../schema';
 import { addMovie, getMovies, getMovieById } from '../controllers/movies';
 
 export const registerRoutes = (app: FastifyInstance) => {
@@ -13,9 +12,101 @@ export const registerRoutes = (app: FastifyInstance) => {
   });
 
   // Movies
-  app.get('/movie', getMovies);
-  app.get('/movie/:id', getMovieById);
 
-  app.post('/movie', { schema: addMovieSchema }, addMovie);
+  app.register(async(fastify) => {
+
+    fastify.get('/v1/movies', {
+      schema: {
+        'summary': 'Get All Movies',
+        'response': {
+          '200': {
+            'description': 'Successful response',
+            type: 'object',
+            properties: {
+              success: { type: 'boolean' },
+              message: { type: 'string' },
+              data: {
+                type: 'array',
+                items: {
+                  type: 'object',
+                  properties: {
+                    title: { type: 'string' }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+    }, getMovies);
+
+  });
+
+  app.register(async(fastify) => {
+
+    fastify.get('/v1/movies/:id', {
+      schema: {
+        summary: 'Get a Movie by ID',
+        params: {
+          type: 'object',
+          properties: {
+            id: {
+              type: 'string',
+              description: 'The ID of the movie to retrieve'
+            }
+          }
+        },
+        response: {
+          200: {
+            description: 'Successful response',
+            type: 'object',
+            properties: {
+              success: { type: 'boolean' },
+              message: { type: 'string' },
+              data: {
+                type: 'object',
+                properties: {
+                  title: { type: 'string' }
+                }
+              }
+            }
+          }
+        }
+      }
+    }, getMovieById);
+
+  });
+
+  app.register(async(fastify) => {
+
+    fastify.post('/v1/movies', { schema: {
+      summary: 'Create a Movie',
+      description: 'Create a new movie',
+      body: {
+        'required': ['title'],
+        type: 'object',
+        properties: {
+          title: { type: 'string' }
+        }
+      },
+      'response': {
+        '201': {
+          type: 'object',
+          properties: {
+            success: { type: 'boolean' },
+            message: { type: 'string' },
+            data: {
+              type: 'object',
+              properties: {
+                title: { type: 'string' }
+              }
+            }
+          }
+        }
+      }
+    }
+    }, addMovie);
+
+  });
 
 };
