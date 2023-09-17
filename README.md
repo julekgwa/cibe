@@ -1,6 +1,6 @@
 # Automate Deployment using CircleCI and Docker
 
-## Install Docker
+## Install Docker and Docker compose
 
 SSH into your VM/VPS and run the following commands
 
