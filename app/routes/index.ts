@@ -17,6 +17,7 @@ export const registerRoutes = (app: FastifyInstance) => {
 
     fastify.get('/v1/movies', {
       schema: {
+        tags: ['Movies'],
         'summary': 'Get All Movies',
         'response': {
           '200': {
@@ -46,6 +47,7 @@ export const registerRoutes = (app: FastifyInstance) => {
 
     fastify.get('/v1/movies/:id', {
       schema: {
+        tags: ['Movies'],
         summary: 'Get a Movie by ID',
         params: {
           type: 'object',
@@ -81,6 +83,7 @@ export const registerRoutes = (app: FastifyInstance) => {
 
     fastify.post('/v1/movies', { schema: {
       summary: 'Create a Movie',
+      tags: ['Movies'],
       description: 'Create a new movie',
       body: {
         'required': ['title'],
